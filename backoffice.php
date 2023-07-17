@@ -8,7 +8,6 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
-// Le reste du code de la page backoffice.php ici
 ?>
 
 <!DOCTYPE html>
