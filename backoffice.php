@@ -2,38 +2,55 @@
 session_start();
 
 // Vérifier si la session n'est pas active ou si l'utilisateur n'est pas authentifié
-if (!isset($_SESSION["user"])) {
-  // Redirection vers la page de connexion
-  header("Location: login.php");
-  exit();
-}
+//if (!isset($_SESSION["user"])) {
+// Redirection vers la page de connexion
+//header("Location: login.php");
+//exit();
+//}
 
-
+// Include the connect.php file to establish the database connection using PDO
 include "connect.php";
 
-
-
+// Function to handle form submission and insert a new project into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Get the form data
   $project_name = $_POST["project_name"];
   $project_details = $_POST["project_details"];
   $project_link = $_POST["project_link"];
   $project_git = $_POST["project_git"];
   $project_screen = $_FILES["project_screen"]["name"];
 
+  // Prepare the SQL query using placeholders
+  $sql = "INSERT INTO projects (project_name, project_details, project_link, project_git, project_screen) VALUES (:name, :details, :link, :git, :screen)";
+  $stmt = $conn->prepare($sql);
 
-  move_uploaded_file($_FILES["project_screen"]["tmp_name"], "assets/img/portfolio/" . $project_screen);
+  // Bind the parameters to the prepared statement
+  $stmt->bindParam(":name", $project_name);
+  $stmt->bindParam(":details", $project_details);
+  $stmt->bindParam(":link", $project_link);
+  $stmt->bindParam(":git", $project_git);
+  $stmt->bindParam(":screen", $project_screen);
 
+  // Upload the image file to a directory on the server (you may need to adjust the path)
+  $target_dir = "assets/img/portfolio/";
+  $target_file = $target_dir . basename($_FILES["project_screen"]["name"]);
+  move_uploaded_file($_FILES["project_screen"]["tmp_name"], $target_file);
 
-  $sql = "INSERT INTO projects (project_name, project_details, project_link, project_git, project_screen) VALUES ('$project_name', '$project_details', '$project_link', '$project_screen')";
-  mysqli_query($conn, $sql);
-
-
-  header("Location: portfolio.php");
+  // Execute the prepared statement
+  if ($stmt->execute()) {
+    // The project was successfully added to the database
+    header("Location: portfolio.php");
+    exit;
+  } else {
+    // An error occurred
+    echo "Error: " . $stmt->errorInfo()[2];
+  }
 }
+
+// Fetch all projects from the database using PDO directly
+$sql = "SELECT * FROM projects";
+$stmt = $db->query($sql);
+$projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,11 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-
   <div class="container mt-5">
     <div class="row justify-content-center">
 
-      <form action="add_project.php" method="post" enctype="multipart/form-data">
+      <form action="backoffice.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="project_name">Nom du projet</label>
           <input type="text" class="form-control" id="project_name" name="project_name" required>
@@ -83,6 +99,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <button type="submit" class="btn btn-primary">Ajouter le projet</button>
       </form>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nom du projet</th>
+            <th>Détails du projet</th>
+            <th>Lien du projet</th>
+            <th>GitHub du projet</th>
+            <th>Screenshot du projet</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <?php
+            foreach ($projects as $project) {
+              echo "<tr>";
+              echo "<td>" . htmlspecialchars($project["project_name"]) . "</td>";
+              echo "<td>" . htmlspecialchars($project["project_details"]) . "</td>";
+              echo "<td>" . htmlspecialchars($project["project_link"]) . "</td>";
+              echo "<td>" . htmlspecialchars($project["project_git"]) . "</td>";
+              echo "<td><img src='assets/img/portfolio/" . htmlspecialchars($project["project_screen"]) . "' alt='Screenshot' style='max-width: 100px;'></td>";
+              echo "</tr>";
+            }
+          ?>
+          
+        </tbody>
+      </table>
     </div>
   </div>
 
