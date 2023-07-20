@@ -11034,3 +11034,7 @@ html {
 .copyright {
   background-color: #1a252f;
 }
+
+.form-group {
+  margin-bottom: 2rem;
+}

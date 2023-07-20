@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Prepare the SQL query using placeholders
   $sql = "INSERT INTO projects (project_name, project_details, project_link, project_git, project_screen) VALUES (:name, :details, :link, :git, :screen)";
-  $stmt = $conn->prepare($sql);
+  $stmt = $db->prepare($sql);
+
 
   // Bind the parameters to the prepared statement
   $stmt->bindParam(":name", $project_name);
@@ -38,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Execute the prepared statement
   if ($stmt->execute()) {
     // The project was successfully added to the database
-    header("Location: portfolio.php");
+    header("Location: index.php");
     exit;
   } else {
     // An error occurred
@@ -63,6 +64,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <title>AntoniSDev</title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Option 1: Include in HTML -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <!-- Font Awesome icons (free version)-->
   <script src="https://usefontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
   <!-- Google fonts-->
@@ -107,37 +110,43 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Nom du projet</th>
             <th>Détails du projet</th>
             <th>Lien du projet</th>
             <th>GitHub du projet</th>
             <th>Screenshot du projet</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          
-          <?php
-            foreach ($projects as $project) {
-              echo "<tr>";
-              echo "<td>" . htmlspecialchars($project["project_name"]) . "</td>";
-              echo "<td>" . htmlspecialchars($project["project_details"]) . "</td>";
-              echo "<td>" . htmlspecialchars($project["project_link"]) . "</td>";
-              echo "<td>" . htmlspecialchars($project["project_git"]) . "</td>";
-              echo "<td><img src='assets/img/portfolio/" . htmlspecialchars($project["project_screen"]) . "' alt='Screenshot' style='max-width: 100px;'></td>";
-              echo "</tr>";
-            }
-          ?>
-          
+
+          <?php foreach ($projects as $project) : ?>
+            <tr>
+              <td><?= htmlspecialchars($project["id"]) ?></td>
+              <td><?= htmlspecialchars($project["project_name"]) ?></td>
+              <td><?= htmlspecialchars($project["project_details"]) ?></td>
+              <td><?= htmlspecialchars($project["project_link"]) ?></td>
+              <td><?= htmlspecialchars($project["project_git"]) ?></td>
+              <td><img src='assets/img/portfolio/<?= htmlspecialchars($project["project_screen"]) ?>' alt='Screenshot' style='max-width: 100px;'></td>
+              <td>
+                <!-- Icône Delete -->
+                <a href="delete.php?id=<?= $project["id"] ?>"><i class="bi bi-trash"></i></a>
+                <!-- Icône Edit -->
+                <a href="edit.php?id=<?= $project["id"] ?>"><i class="bi bi-pencil"></i></a>
+                <!-- Icône Cacher/Voir (avec l'œil) -->
+                <a href="#"><i class="bi bi-eye"></i></a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+
         </tbody>
       </table>
     </div>
   </div>
 
-  <style>
-    .form-group {
-      margin-bottom: 2rem;
-    }
-  </style>
+
+
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
