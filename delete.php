@@ -34,7 +34,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         // Display confirmation dialog using JavaScript
         echo "
         <script>
-        if (confirm('Are you sure you want to delete this item?')) {
+        if (confirm('confirm?')) {
             window.location.href = 'delete.php?id=$id&confirm=yes';
         } else {
             window.location.href = 'backoffice.php';
