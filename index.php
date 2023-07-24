@@ -7,9 +7,6 @@ $stmt = $db->query($sql);
 $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-
-
-
 ?>
 
 
@@ -73,34 +70,32 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
   <!-- Portfolio Section-->
-
- 
-    <section class="page-section portfolio" id="portfolio">
-      <div class="container">
-        <!-- Portfolio Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom">
-          <div class="divider-custom-line"></div>
-          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-          <div class="divider-custom-line"></div>
-        </div>
-        <!-- Portfolio Grid Items-->
-        <div class="row justify-content-center">
-          <!-- Portfolio Item 1-->
-          <?php foreach ($projects as $project) : ?>
+  <section class="page-section portfolio" id="portfolio">
+    <div class="container">
+      <!-- Portfolio Section Heading-->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+      <!-- Icon Divider-->
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+        <div class="divider-custom-line"></div>
+      </div>
+      <!-- Portfolio Grid Items-->
+      <div class="row justify-content-center">
+        <!-- Portfolio Item-->
+        <?php foreach ($projects as $index => $project) : ?>
           <div class="col-md-6 col-lg-4 mb-5">
-            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+            <div class="portfolio-item mx-auto" onclick="openModal(<?= $index ?>)">
               <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
               </div>
-              <img class="img-fluid" src='assets/img/portfolio/<?= htmlspecialchars($project["project_screen"]) ?>' alt='Screenshot'>              
+              <img class="img-fluid" src='assets/img/portfolio/<?= htmlspecialchars($project["project_screen"]) ?>' alt='Screenshot'>
             </div>
           </div>
-          <?php endforeach; ?>
-        </div>
+        <?php endforeach; ?>
       </div>
-    </section>
+    </div>
+  </section>
 
 
 
@@ -134,6 +129,12 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </section>
+
+
+
+
+
+
   <!-- Contact Section-->
   <section class="page-section" id="contact">
     <div class="container">
@@ -148,12 +149,15 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <!-- Contact Section Form-->
       <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-7">
-
-
         </div>
       </div>
     </div>
   </section>
+
+
+
+
+
   <!-- Footer-->
   <footer class="footer text-center">
     <div class="container">
@@ -187,49 +191,91 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </footer>
+
+
+
+
+
+
+
+
   <!-- Copyright Section-->
   <div class="copyright py-4 text-center text-white">
     <div class="container"><small>Copyright &copy; lorem 2023</small></div>
   </div>
 
+
+
+
+
+
+
+
+
+
   <!-- Portfolio Modals-->
-  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-        <div class="modal-body text-center pb-5">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title-->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">lorem</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                  <div class="divider-custom-line"></div>
+  <?php foreach ($projects as $index => $project) : ?>
+    <div class="portfolio-modal modal fade" id="portfolioModal<?= $index ?>" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+          <div class="modal-body text-center pb-5">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-lg-8">
+                  <!-- Portfolio Modal - Title-->
+                  <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"><?= htmlspecialchars($project["project_name"]) ?></h2>
+                  <!-- Icon Divider-->
+                  <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                  </div>
+                  <!-- Portfolio Modal - Image-->
+                  <img class="img-fluid rounded mb-5" src="assets/img/portfolio/<?= htmlspecialchars($project["project_screen"]) ?>" alt="<?= htmlspecialchars($project["project_name"]) ?>" />
+                  <!-- Portfolio Modal - Text-->
+                  <p class="mb-4"><?= htmlspecialchars($project["project_details"]) ?></p>
+                  <!-- Portfolio Modal - Links -->
+                  <?php if (!empty($project["project_link"])) : ?>
+                    <a href="<?= htmlspecialchars($project["project_link"]) ?>" class="btn btn-primary" target="_blank">
+                      <i class="fas fa-external-link-alt fa-fw"></i>
+                      Voir le projet
+                    </a>
+                  <?php endif; ?>
+                  <?php if (!empty($project["project_git"])) : ?>
+                    <a href="<?= htmlspecialchars($project["project_git"]) ?>" class="btn btn-primary" target="_blank">
+                      <i class="fab fa-github fa-fw"></i>
+                      Voir sur GitHub
+                    </a>
+                  <?php endif; ?>
+                  <button class="btn btn-primary" data-bs-dismiss="modal">
+                    <i class="fas fa-xmark fa-fw"></i>
+                    Fermer la fenêtre
+                  </button>
                 </div>
-                <!-- Portfolio Modal - Image-->
-                <img class="img-fluid rounded mb-5" src="assets/img/portfolio/voyage.png" alt="..." />
-                <!-- Portfolio Modal - Text-->
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                <button class="btn btn-primary" data-bs-dismiss="modal">
-                  <i class="fas fa-xmark fa-fw"></i>
-                  Close Window
-                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <?php endforeach; ?>
+
+
 
 
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
   <script src="js/scripts.js"></script>
+
+  <script>
+    // Fonction pour ouvrir le bon modal lorsque l'utilisateur clique sur une image
+    function openModal(index) {
+      var modal = new bootstrap.Modal(document.getElementById('portfolioModal' + index));
+      modal.show();
+    }
+  </script>
 
 </body>
 
