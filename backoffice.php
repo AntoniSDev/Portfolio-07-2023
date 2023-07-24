@@ -76,8 +76,18 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
 
+
+
   <div class="container mt-5">
     <div class="row justify-content-center">
+
+      <!-- Bouton pour revenir sur la page index.php -->
+      <div class="container mt-3">
+        <div class="row justify-content-center">
+          <a href="index.php" class="btn btn-primary">Revenir à la page d'accueil</a>
+        </div>
+      </div>
+
 
       <form action="backoffice.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -122,6 +132,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
 
           <?php foreach ($projects as $project) : ?>
+
             <tr>
               <td><?= htmlspecialchars($project["id"]) ?></td>
               <td><?= htmlspecialchars($project["project_name"]) ?></td>
@@ -135,7 +146,9 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Icône Edit -->
                 <a href="edit.php?id=<?= $project["id"] ?>"><i class="bi bi-pencil"></i></a>
                 <!-- Icône Cacher/Voir (avec l'œil) -->
-                <a href="#"><i class="bi bi-eye"></i></a>
+                <a href="archive_project.php?id=<?= $project["id"] ?>&action=<?= $project["is_archived"] ? 'unarchive' : 'archive' ?>">
+                  <i class="bi bi-eye<?= $project["is_archived"] ? "-slash" : "" ?>"></i>
+                </a>
               </td>
             </tr>
           <?php endforeach; ?>
