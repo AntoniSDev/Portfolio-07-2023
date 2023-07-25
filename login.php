@@ -13,7 +13,7 @@ if (!empty($_POST)) {
     require_once("connect.php");
 
     // Exécuter la requête SQL
-    $sql = "SELECT * FROM user WHERE user_name = :user_name AND user_password = :password";
+    $sql = "SELECT * FROM portfolio_user WHERE user_name = :user_name AND user_password = :password";
     $query = $db->prepare($sql);
     $query->bindValue(":user_name", $_POST["login"]);
     $query->bindValue(":password", $_POST["password"]);

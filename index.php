@@ -2,7 +2,7 @@
 include "connect.php";
 
 // Fetch all projects from the database using PDO directly
-$sql = "SELECT * FROM projects";
+$sql = "SELECT * FROM portfolio_projects WHERE is_archived = 0";
 $stmt = $db->query($sql);
 $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -35,7 +35,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="#page-top">testing test</a>
+      <a class="navbar-brand" href="#page-top">AntoniSDEV</a>
       <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -56,7 +56,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <!-- Masthead Avatar Image-->
       <img class="masthead-avatar mb-5 rounded-circle" src="assets/img/me.jpg" alt="..." />
       <!-- Masthead Heading-->
-      <h1 class="masthead-heading text-uppercase mb-0">lorem truc</h1>
+      <h1 class="masthead-heading text-uppercase mb-0">je suis pas dev</h1>
       <!-- Icon Divider-->
       <div class="divider-custom divider-light">
         <div class="divider-custom-line"></div>
@@ -117,23 +117,18 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <p class="lead">Je m’appelle Antoni et j’ai 42 ans. Après avoir exercé le métier de cuisinier pendant plusieurs années, j’ai décidé de me reconvertir dans le développement web et web mobile. J’ai entamé une formation afin d’apprendre les bases pour pouvoir concevoir des sites et des applications. </p>
         </div>
         <div class="col-lg-4 me-auto">
-          <p class="lead">Au cours de cette formation, j’ai également découvert le développement de jeux vidéo, et je souhaite maintenant approfondir mes connaissances en Unity et en pixel art, pour réaliser mes propres projets ludiques!</p>
+          <p class="lead">Au cours de cette formation, j’ai également découvert le développement de jeux vidéo, et je souhaite maintenant approfondir mes connaissances en apprenant Unity et le pixel art, pour réaliser mes propres projets ludiques!</p>
         </div>
       </div>
       <!-- About Section Button-->
       <div class="text-center mt-4">
-        <a class="btn btn-xl btn-outline-light" href="#">
+        <a class="btn btn-xl btn-outline-light" href="https://mempoule.lol/antoni/CV.pdf" target="_blank">
           <i class="fas fa-download me-2"></i>
           Mon CV
         </a>
       </div>
     </div>
   </section>
-
-
-
-
-
 
   <!-- Contact Section-->
   <section class="page-section" id="contact">
@@ -149,6 +144,90 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <!-- Contact Section Form-->
       <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-7">
+
+
+          
+
+
+<section id="contact">
+
+<div class="container">
+
+
+    
+
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <!-- Ouverture du formulaire avec ses attributs:  id, method, action, role (facultatif)-->
+            <form id="contact-form" method="post" action="contact.php" role="form">
+
+
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="firstname">Prénom <span class="etoile">*</span></label>
+                        <input id="firstname" type="text" name="firstname" class="form-control"
+                            placeholder="Votre prénom">
+                        <p class="comments"></p>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <label for="name">Nom <span class="etoile">*</span></label>
+                        <input id="name" type="text" name="name" class="form-control" placeholder="Votre Nom">
+                        <p class="comments"></p>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <label for="email">Email <span class="etoile">*</span></label>
+                        <input id="email" type="text" name="email" class="form-control" placeholder="Votre Email">
+                        <p class="comments"></p>
+                    </div>
+
+
+                    <div class="col-lg-6">
+                        <label for="phone">Téléphone</label>
+                        <input id="phone" type="tel" name="phone" class="form-control"
+                            placeholder="Votre Téléphone">
+                        <p class="comments"></p>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <label for="message">Message <span class="etoile">*</span></label>
+                        <textarea id="message" name="message" class="form-control" placeholder="Votre Message"
+                            rows="4"></textarea>
+                        <p class="comments"></p>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <p class="etoile"><strong>* Ces informations sont requises.</strong></p>
+                    </div>
+
+
+                    <div class="col-lg-12 text-end">
+                        <input type="submit" class="button1 btn" value="Envoyer">
+                        <!-- ceci est ma clé recaptcha coté client-->
+                        <div class="g-recaptcha" data-sitekey="6LfNfookAAAAAKg7baUfn3khT4QOb2VZAsSqthHB">
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
         </div>
       </div>
     </div>
@@ -164,28 +243,22 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="row">
         <!-- Footer Location-->
         <div class="col-lg-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Location</h4>
-          <p class="lead mb-0">
-            lorem lorem
-            <br />
-            lorem lorem 58000
+          <h4 class="text-uppercase mb-4">Adresse</h4>
+          <p class="lead mb-0">            
+            Nevers 58000
           </p>
         </div>
         <!-- Footer Social Icons-->
         <div class="col-lg-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">lorem lorem</h4>
-          <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
-          <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-          <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
-          <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+          <h4 class="text-uppercase mb-4">Réseaux</h4>          
+          <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AntoniSDev"><i class="fab fa-fw fa-github"></i></a>
+          <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/antoni-salomon-17821b267/"><i class="fab fa-fw fa-linkedin-in"></i></a>          
         </div>
         <!-- Footer About Text-->
         <div class="col-lg-4">
-          <h4 class="text-uppercase mb-4">lorem lorem </h4>
+          <h4 class="text-uppercase mb-4">Je suis pas Dev</h4>
           <p class="lead mb-0">
-            loremloremloremloremloremloremloremloremlorem
-            <a href="#">lorem lorem</a>
-            .
+            Portfolio réalisé en bootstrap <br> et php pour le back office.           
           </p>
         </div>
       </div>
@@ -201,7 +274,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- Copyright Section-->
   <div class="copyright py-4 text-center text-white">
-    <div class="container"><small>Copyright &copy; lorem 2023</small></div>
+    <div class="container"><small>Copyright &copy; lorem ipsum 58000</small></div>
   </div>
 
 
@@ -268,6 +341,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Core theme JS-->
   <script src="js/scripts.js"></script>
+  <!-- Sciprt pour validation ReCaptcha-->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <script>
     // Fonction pour ouvrir le bon modal lorsque l'utilisateur clique sur une image

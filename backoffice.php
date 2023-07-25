@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $project_screen = $_FILES["project_screen"]["name"];
 
   // Prepare the SQL query using placeholders
-  $sql = "INSERT INTO projects (project_name, project_details, project_link, project_git, project_screen) VALUES (:name, :details, :link, :git, :screen)";
+  $sql = "INSERT INTO portfolio_projects (project_name, project_details, project_link, project_git, project_screen) VALUES (:name, :details, :link, :git, :screen)";
   $stmt = $db->prepare($sql);
 
 
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch all projects from the database using PDO directly
-$sql = "SELECT * FROM projects";
+$sql = "SELECT * FROM portfolio_projects";
 $stmt = $db->query($sql);
 $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

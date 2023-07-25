@@ -8,7 +8,7 @@ if (isset($_GET["action"]) && isset($_GET["id"])) {
   $project_id = $_GET["id"];
 
   // Vérifier si le projet existe dans la base de données
-  $sql_check_project = "SELECT COUNT(*) FROM projects WHERE id = :project_id";
+  $sql_check_project = "SELECT COUNT(*) FROM portfolio_projects WHERE id = :project_id";
   $stmt_check_project = $db->prepare($sql_check_project);
   $stmt_check_project->bindParam(":project_id", $project_id);
   $stmt_check_project->execute();
@@ -23,7 +23,7 @@ if (isset($_GET["action"]) && isset($_GET["id"])) {
     }
 
     // Mettre à jour le statut d'archivage dans la base de données
-    $sql_update_project = "UPDATE projects SET is_archived = :is_archived WHERE id = :project_id";
+    $sql_update_project = "UPDATE portfolio_projects SET is_archived = :is_archived WHERE id = :project_id";
     $stmt_update_project = $db->prepare($sql_update_project);
     $stmt_update_project->bindParam(":is_archived", $is_archived);
     $stmt_update_project->bindParam(":project_id", $project_id);

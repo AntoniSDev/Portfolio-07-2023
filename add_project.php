@@ -11,8 +11,6 @@ session_start();
 
 include "connect.php";
 
-
-
 $project_name = $_POST["project_name"];
 $project_details = $_POST["project_details"];
 $project_link = $_POST["project_link"];
@@ -30,8 +28,7 @@ if ($_FILES["project_screen"]["error"] !== UPLOAD_ERR_OK) {
   exit();
 }
 
-
-$sql = "INSERT INTO projects (project_name, project_details, project_link, project_git, project_screen) VALUES ('$project_name', '$project_details', '$project_link', '$project_git', '$project_screen')";
+$sql = "INSERT INTO portfolio_projects (project_name, project_details, project_link, project_git, project_screen) VALUES ('$project_name', '$project_details', '$project_link', '$project_git', '$project_screen')";
 
 if ($db->query($sql)) {
   // The project was successfully added to the database

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       move_uploaded_file($_FILES["project_screen"]["tmp_name"], $target_file);
 
       // Préparer la requête SQL UPDATE avec le nouveau fichier d'image
-      $sql = "UPDATE projects SET project_name=:project_name, project_details=:project_details, project_link=:project_link, project_git=:project_git, project_screen=:project_screen WHERE id=:id";
+      $sql = "UPDATE portfolio_projects SET project_name=:project_name, project_details=:project_details, project_link=:project_link, project_git=:project_git, project_screen=:project_screen WHERE id=:id";
       $query = $db->prepare($sql);
       $query->bindParam(':project_screen', $project_screen);
     } else {
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $project_screen = $_POST["existing_screen"];
 
       // Préparer la requête SQL UPDATE sans modifier le champ project_screen
-      $sql = "UPDATE projects SET project_name=:project_name, project_details=:project_details, project_link=:project_link, project_git=:project_git WHERE id=:id";
+      $sql = "UPDATE portfolio_projects SET project_name=:project_name, project_details=:project_details, project_link=:project_link, project_git=:project_git WHERE id=:id";
       $query = $db->prepare($sql);
     }
 
@@ -84,7 +84,7 @@ if (!isset($_GET["id"])) {
 $project_id = $_GET["id"];
 
 // Récupérer les détails du projet depuis la base de données
-$sql = "SELECT * FROM projects WHERE id = :id";
+$sql = "SELECT * FROM portfolio_projects WHERE id = :id";
 $stmt = $db->prepare($sql);
 $stmt->bindParam(":id", $project_id);
 $stmt->execute();

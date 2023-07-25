@@ -34,7 +34,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     // Check if the user has confirmed the deletion
     if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         // delete from projects where the id matches the URL
-        $sql = "DELETE FROM projects WHERE id = :id";
+        $sql = "DELETE FROM portfolio_projects WHERE id = :id";
         $query = $db->prepare($sql);
         // attach :id to id URL
         $query->bindValue(':id', $id, PDO::PARAM_INT);
