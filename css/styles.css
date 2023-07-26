@@ -11038,3 +11038,17 @@ html {
 .form-group {
   margin-bottom: 2rem;
 }
+
+
+.sendbtn {
+  background-color: #fff; 
+  color: var(--bs-teal); 
+  border-color: var(--bs-teal);
+  padding: 0.5rem;   
+}
+
+.sendbtn:hover {
+  background-color: var(--bs-teal); 
+  color: #fff; 
+  border-color: var(--bs-teal); 
+}

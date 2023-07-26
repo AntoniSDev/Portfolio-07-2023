@@ -1,10 +1,18 @@
 <?php
+session_start();
 include "connect.php";
 
 // Fetch all projects from the database using PDO directly
 $sql = "SELECT * FROM portfolio_projects WHERE is_archived = 0";
 $stmt = $db->query($sql);
 $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_SESSION['form_sent']) && $_SESSION['form_sent'] === true) {
+  $successMessage = "Message bien envoyé. Réponse dans les meilleurs délais.";
+  unset($_SESSION['form_sent']);
+}
+
+
 
 
 ?>
@@ -29,6 +37,11 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="css/styles.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body id="page-top">
@@ -146,92 +159,92 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-lg-8 col-xl-7">
 
 
-          
 
 
-<section id="contact">
 
-<div class="container">
+          <section id="contact">
 
-
-    
-
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-            <!-- Ouverture du formulaire avec ses attributs:  id, method, action, role (facultatif)-->
-            <form id="contact-form" method="post" action="contact.php" role="form">
+            <div class="container">
 
 
 
 
-                <div class="row">
-                    <div class="col-lg-6">
+              <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                  <!-- Ouverture du formulaire avec ses attributs:  id, method, action, role (facultatif)-->
+                  <form id="contact-form" method="post" action="contact.php" role="form">
+
+
+
+
+                    <div class="row">
+                      <div class="col-lg-6">
                         <label for="firstname">Prénom <span class="etoile">*</span></label>
-                        <input id="firstname" type="text" name="firstname" class="form-control"
-                            placeholder="Votre prénom">
+                        <input id="firstname" type="text" name="firstname" class="form-control" placeholder="Votre prénom">
                         <p class="comments"></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <label for="name">Nom <span class="etoile">*</span></label>
                         <input id="name" type="text" name="name" class="form-control" placeholder="Votre Nom">
                         <p class="comments"></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <label for="email">Email <span class="etoile">*</span></label>
                         <input id="email" type="text" name="email" class="form-control" placeholder="Votre Email">
                         <p class="comments"></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-6">
+                      <div class="col-lg-6">
                         <label for="phone">Téléphone</label>
-                        <input id="phone" type="tel" name="phone" class="form-control"
-                            placeholder="Votre Téléphone">
+                        <input id="phone" type="tel" name="phone" class="form-control" placeholder="Votre Téléphone">
                         <p class="comments"></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-12">
+                      <div class="col-lg-12">
                         <label for="message">Message <span class="etoile">*</span></label>
-                        <textarea id="message" name="message" class="form-control" placeholder="Votre Message"
-                            rows="4"></textarea>
+                        <textarea id="message" name="message" class="form-control" placeholder="Votre Message" rows="4"></textarea>
                         <p class="comments"></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-12">
+                      <div class="col-lg-12">
                         <p class="etoile"><strong>* Ces informations sont requises.</strong></p>
-                    </div>
+                      </div>
 
 
-                    <div class="col-lg-12 text-end">
-                        <input type="submit" class="button1 btn" value="Envoyer">
+                      <div class="col-lg-12 text-end">
+                        <input type="submit" class="btn btn-xl sendbtn" value="Envoyer">
+
                         <!-- ceci est ma clé recaptcha coté client-->
                         <div class="g-recaptcha" data-sitekey="6LfNfookAAAAAKg7baUfn3khT4QOb2VZAsSqthHB">
 
                         </div>
+                      </div>
                     </div>
+
+
+                  </form>
                 </div>
-
-
-            </form>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
   </section>
+
+
+
+
+
+
+
 
 
 
@@ -244,21 +257,21 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Footer Location-->
         <div class="col-lg-4 mb-5 mb-lg-0">
           <h4 class="text-uppercase mb-4">Adresse</h4>
-          <p class="lead mb-0">            
+          <p class="lead mb-0">
             Nevers 58000
           </p>
         </div>
         <!-- Footer Social Icons-->
         <div class="col-lg-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Réseaux</h4>          
+          <h4 class="text-uppercase mb-4">Réseaux</h4>
           <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/AntoniSDev"><i class="fab fa-fw fa-github"></i></a>
-          <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/antoni-salomon-17821b267/"><i class="fab fa-fw fa-linkedin-in"></i></a>          
+          <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/antoni-salomon-17821b267/"><i class="fab fa-fw fa-linkedin-in"></i></a>
         </div>
         <!-- Footer About Text-->
         <div class="col-lg-4">
           <h4 class="text-uppercase mb-4">Je suis pas Dev</h4>
           <p class="lead mb-0">
-            Portfolio réalisé en bootstrap <br> et php pour le back office.           
+            Portfolio réalisé en bootstrap <br> et php pour le back office.
           </p>
         </div>
       </div>
@@ -337,12 +350,11 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-  <!-- Bootstrap core JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <!-- Core theme JS-->
   <script src="js/scripts.js"></script>
   <!-- Sciprt pour validation ReCaptcha-->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <script>
     // Fonction pour ouvrir le bon modal lorsque l'utilisateur clique sur une image
@@ -351,6 +363,27 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       modal.show();
     }
   </script>
+
+  <?php if (isset($successMessage)) : ?>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: '<?= $successMessage ?>',
+          confirmButtonText: 'OK',
+          // You can customize the appearance and behavior of the notification here.
+        });
+      });
+    </script>
+  <?php endif; ?>
+
+
+
+
+
+
+
 
 </body>
 
